@@ -16,3 +16,11 @@ resource "aws_route_table" "public-rt" {
     Name = "roboshop-${var.ENV}-public-rt"
   }
 }
+
+# Attaches the public rt to the public subnets
+resource "aws_route_table_association" "public-rt-association" {
+  count          = length(aws_subnet.public_subnet.*.id)
+
+  subnet_id      = element(aws_subnet.public_subnet.*.id, count.index)
+  route_table_id = aws_route_table.public-rt.id
+}
