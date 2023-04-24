@@ -13,7 +13,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_eip" "ngw-eip" {
   vpc       = true
 
-  tags {
+  tags = {
       Name  = "robot-${var.ENV}-ngw-eip"
   }
 }
@@ -24,7 +24,7 @@ resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw-eip.id
   subnet_id     = aws_subnet.public_subnet.id[0]
 
-  tags = {
+  tags   = {
     Name = "robot-${var.ENV}-ngw"
   }
 
